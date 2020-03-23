@@ -350,7 +350,6 @@
             "LPCTarget"
         ],
         "core": "Cortex-M0",
-        "default_toolchain": "uARM",
         "extra_labels": [
             "NXP",
             "LPC11UXX",
@@ -362,10 +361,14 @@
         ],
         "supported_toolchains": [
             "ARM",
-            "uARM",
             "GCC_ARM",
             "IAR"
         ],
+        "supported_c_libs": {
+            "arm": ["small"],
+            "gcc_arm": ["small"],
+            "iar": ["std"]
+        },
         "detect_code": [
             "1040"
         ],
@@ -391,9 +394,9 @@
             "tickless-from-us-ticker": true,
             "boot-stack-size": "0x400"
         },
-        "default_lib": "small",
+        "c_lib": "small",
         "release_versions": [
-            "2"
+            "5"
         ],
         "device_name": "LPC11U24FBD48/401"
     },
