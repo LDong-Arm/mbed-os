@@ -235,14 +235,30 @@
     "LPC11U24": {
         "inherits": ["LPCTarget"],
         "core": "Cortex-M0",
-        "default_toolchain": "uARM",
-        "extra_labels": ["NXP", "LPC11UXX", "LPC11U24_401"],
+        "extra_labels": [
+            "NXP",
+            "LPC11UXX",
+            "LPC11U24_401"
+        ],
         "macros": [
             "CMSIS_VECTAB_VIRTUAL",
             "CMSIS_VECTAB_VIRTUAL_HEADER_FILE=\"cmsis_nvic.h\""
         ],
-        "supported_toolchains": ["ARM", "uARM", "GCC_ARM", "IAR"],
+        "supported_toolchains": ["ARM", "GCC_ARM", "IAR"],
         "detect_code": ["1040"],
+        "supported_toolchains": [
+            "ARM",
+            "GCC_ARM",
+            "IAR"
+        ],
+        "supported_c_libs": {
+            "arm": ["small"],
+            "gcc_arm": ["small"],
+            "iar": ["std"]
+        },
+        "detect_code": [
+            "1040"
+        ],
         "device_has": [
             "ANALOGIN",
             "I2C",
@@ -258,10 +274,17 @@
             "SLEEP",
             "SPI",
             "SPISLAVE",
-            "STDIO_MESSAGES"
+            "STDIO_MESSAGES",
+            "USTICKER"
         ],
-        "default_lib": "small",
-        "release_versions": ["2"],
+        "overrides": {
+            "tickless-from-us-ticker": true,
+            "boot-stack-size": "0x400"
+        },
+        "c_lib": "small",
+        "release_versions": [
+            "5"
+        ],
         "device_name": "LPC11U24FBD48/401"
     },
     "OC_MBUINO": {
