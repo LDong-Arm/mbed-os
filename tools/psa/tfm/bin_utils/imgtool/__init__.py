@@ -1,4 +1,4 @@
-# Copyright 2017 Linaro Limited
+# Copyright 2017-2020 Linaro Limited
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# This file is intentionally empty.
-#
-# The __init__.py files are required to make Python treat the directories as
-# containing packages.
+imgtool_version = "1.7.0rc1"
