@@ -8,3 +8,7 @@ endif()
 if("TFM_V1_1" IN_LIST MBED_TARGET_LABELS)
     add_subdirectory(TARGET_TFM_V1_1)
 endif()
+
+if("TFM_V1_2" IN_LIST MBED_TARGET_LABELS)
+    add_subdirectory(TARGET_TFM_V1_2)
+endif()
