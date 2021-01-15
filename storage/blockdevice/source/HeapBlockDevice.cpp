@@ -58,6 +58,10 @@ int HeapBlockDevice::init()
 
     if (!_blocks) {
         _blocks = new uint8_t *[_count];
+        if (!_blocks) {
+            return BD_ERROR_DEVICE_ERROR;
+        }
+
         for (size_t i = 0; i < _count; i++) {
             _blocks[i] = 0;
         }
