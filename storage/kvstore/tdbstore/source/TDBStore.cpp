@@ -996,6 +996,9 @@ int TDBStore::increment_max_keys(void **ram_table)
     // Reallocate ram table with new size
     ram_table_entry_t *old_ram_table = (ram_table_entry_t *) _ram_table;
     ram_table_entry_t *new_ram_table = new ram_table_entry_t[_max_keys + 1];
+    if (!new_ram_table) {
+        return MBED_ERROR_OUT_OF_MEMORY;
+    }
     memset(new_ram_table, 0, sizeof(ram_table_entry_t) * (_max_keys + 1));
 
     // Copy old content to new table
@@ -1031,6 +1034,9 @@ int TDBStore::init()
     _max_keys = initial_max_keys;
 
     ram_table = new ram_table_entry_t[_max_keys];
+    if (!ram_table) {
+        goto fail;
+    }
     memset(ram_table, 0, sizeof(ram_table_entry_t) * _max_keys);
     _ram_table = ram_table;
     _num_keys = 0;
@@ -1038,6 +1044,9 @@ int TDBStore::init()
     _size = (size_t) -1;
 
     _buff_bd = new BufferedBlockDevice(_bd);
+    if (!_buff_bd) {
+        goto fail;
+    }
     ret = _buff_bd->init();
     if (ret) {
         goto fail;
@@ -1046,8 +1055,17 @@ int TDBStore::init()
     _prog_size = _bd->get_program_size();
     _work_buf_size = std::max<size_t>(_prog_size, min_work_buf_size);
     _work_buf = new uint8_t[_work_buf_size];
+    if (!_work_buf) {
+        goto fail;
+    }
     _key_buf = new char[MAX_KEY_SIZE];
+    if (!_key_buf) {
+        goto fail;
+    }
     _inc_set_handle = new inc_set_handle_t;
+    if (!_inc_set_handle) {
+        goto fail;
+    }
     memset(_inc_set_handle, 0, sizeof(inc_set_handle_t));
     memset(_iterator_table, 0, sizeof(_iterator_table));
 
@@ -1243,10 +1261,18 @@ int TDBStore::iterator_open(iterator_t *it, const char *prefix)
     }
 
     handle = new key_iterator_handle_t;
+    if (!handle) {
+        ret = MBED_ERROR_OUT_OF_MEMORY;
+        goto end;
+    }
     *it = reinterpret_cast<iterator_t>(handle);
 
     if (prefix && strcmp(prefix, "")) {
         handle->prefix = new char[strlen(prefix) + 1];
+        if (!handle->prefix) {
+            ret = MBED_ERROR_OUT_OF_MEMORY;
+            goto end;
+        }
         strcpy(handle->prefix, prefix);
     } else {
         handle->prefix = 0;
