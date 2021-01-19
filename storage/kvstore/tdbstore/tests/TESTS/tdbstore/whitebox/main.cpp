@@ -347,9 +347,9 @@ static void multi_set_test()
     // We need to skip the test if we don't have enough memory for the heap block device.
     // However, this device allocates the erase units on the fly, so "erase" it via the flash
     // simulator. A failure here means we haven't got enough memory.
-    flash_bd.init();
-    result = flash_bd.erase(0, flash_bd.size());
+    result = flash_bd.init();
     TEST_SKIP_UNLESS_MESSAGE(!result, "Not enough heap to run test");
+    result = flash_bd.erase(0, flash_bd.size());
     flash_bd.deinit();
 #endif
 
