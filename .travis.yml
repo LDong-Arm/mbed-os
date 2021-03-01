@@ -39,6 +39,9 @@ addons:
     - ninja-build
 
 matrix:
+  allow_failures:
+    - stage: *
+
   include:
 
     ### Basic Tests ###
